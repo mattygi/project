@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h2>Choose a Payment Method</h2>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul class="flash-messages">
+          {% for message in messages %}
+            <li class="flash-msg">{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    <!-- Payment Selection Form (For Looks Only) -->
+    <form>
+      <label>Select Payment Method</label><br>
+      <div class="radio-group">
+        <div class="radio-option">
+          <input type="radio" id="credit" name="method" value="credit">
+          <label for="credit">Credit/Debit Card</label>
+        </div>
+        <div class="radio-option">
+          <input type="radio" id="in_store" name="method" value="in_store">
+          <label for="in_store">Pay In-Store</label>
+        </div>
+      </div>
+
+      <!-- Redirect Button -->
+      <a href="{{ url_for('order_placed') }}" class="small-btn login-btn">Proceed to Order Confirmation</a>
+    </form>
+
+    <div class="button-group">
+      <a href="{{ url_for('index') }}" class="small-btn secondary-btn">Back to Home</a>
+    </div>
+  </div>
+</body>
+</html>

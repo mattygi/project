@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Store Orders</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    table, th, td {
+      border: 1px solid black;
+    }
+    th, td {
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Store Orders</h2>
+
+    <!-- Create a table to display orders -->
+    <table>
+      <thead>
+        <tr>
+          <th>Order ID</th>
+          <th>User ID</th>
+          <th>Username</th>
+          <th>Order Items</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for order in raw_orders %}
+        <tr>
+          <td>{{ order.order_id }}</td>
+          <td>{{ order.user_id }}</td>
+          <td>{{ order.username }}</td>
+          <td>
+            <ul>
+              {% for item in order.order_items %}
+              <li>{{ item.Quantity }} x {{ item.Item }} @ ${{ item.Price }}</li>
+              {% endfor %}
+            </ul>
+          </td>
+          <td>{{ order.status }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>

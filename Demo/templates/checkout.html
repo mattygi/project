@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>🛒 Checkout</h2>
+
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <ul class="flash-messages">
+              {% for message in messages %}
+                <li class="flash-msg">{{ message }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+
+        {% if cart and cart|length > 0 %}
+            <ul class="order-summary">
+                {% for order in cart %}
+                    <li>
+                        <strong>Order #{{ order.order_id }}</strong> 
+                        <span>(Status: {{ order.status }})</span>
+                        <ul>
+                            {% for item in order.order_items %}
+                                <li>{{ item.Quantity }}x {{ item.Item }} - ${{ item.Price }}</li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <!-- Proceed to Payment Button -->
+            <form method="post" action="{{ url_for('payment') }}">
+                <button type="submit" class="small-btn login-btn">Proceed to Payment</button>
+            </form>
+        {% else %}
+            <p>Your cart is empty. Please add items to proceed to checkout.</p>
+        {% endif %}
+
+        <div class="button-group">
+            <a href="{{ url_for('cart.cart') }}" class="small-btn secondary-btn">Back to Cart</a>
+            <a href="{{ url_for('index') }}" class="small-btn secondary-btn">Continue Shopping</a>
+        </div>
+    </div>
+</body>
+</html>
